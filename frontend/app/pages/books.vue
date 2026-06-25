@@ -1,56 +1,54 @@
 <template>
-  <div class="max-w-[1440px] mx-auto px-4 sm:px-8 py-10">
+  <div>
     <!-- Header Section -->
-    <div class="sm:flex sm:items-center justify-between mb-12">
+    <div class="sm:flex sm:items-center justify-between mb-10 bg-neo-yellow p-6 rounded-neo border-neo border-neo-black shadow-neo">
       <div>
-        <h1 class="text-[40px] font-semibold text-apple-ink tracking-tight-display leading-tight">Books</h1>
-        <p class="mt-1 text-[17px] text-apple-ink-muted-80 leading-apple-body">A complete catalog of all publications.</p>
+        <h1 class="text-4xl font-black text-neo-black uppercase tracking-wider">Books</h1>
+        <p class="mt-2 text-lg font-bold text-neo-black">A complete catalog of all publications.</p>
       </div>
       <div class="mt-6 sm:mt-0">
-        <button @click="openCreateModal" type="button" class="inline-flex items-center justify-center bg-apple-primary text-white text-[17px] font-body rounded-apple-pill px-[22px] py-[11px] hover:scale-95 transition-transform duration-200">
-          Add book
+        <button @click="openCreateModal" type="button" class="inline-flex items-center justify-center bg-neo-pink text-neo-black font-black uppercase tracking-wider border-neo border-neo-black rounded-neo px-6 py-3 shadow-neo hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all">
+          + Add Book
         </button>
       </div>
     </div>
 
     <!-- Error State -->
-    <div v-if="error" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-apple-md">
-      Error loading books. Please try again later.
+    <div v-if="error" class="bg-neo-red border-neo border-neo-black shadow-neo text-neo-black font-bold px-6 py-4 rounded-neo mb-8 text-lg">
+      ERROR! Could not load books. Please try again.
     </div>
 
     <!-- Loading State -->
-    <div v-else-if="pending" class="bg-white border border-apple-hairline rounded-apple-lg p-6">
-      <Skeleton v-for="i in 5" :key="i" class="mb-4" />
+    <div v-else-if="pending" class="bg-white border-neo border-neo-black rounded-neo shadow-neo overflow-hidden">
+      <Skeleton v-for="i in 5" :key="i" />
     </div>
 
     <!-- Data Table Card -->
-    <div v-else class="bg-white border border-apple-hairline rounded-apple-lg overflow-hidden">
+    <div v-else class="bg-white border-neo border-neo-black rounded-neo shadow-neo overflow-hidden">
       <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-apple-hairline">
-          <thead class="bg-apple-pearl">
+        <table class="min-w-full">
+          <thead class="bg-neo-green border-b-neo border-neo-black">
             <tr>
-              <th scope="col" class="py-4 pl-6 pr-3 text-left text-[14px] font-semibold text-apple-ink-muted-80 tracking-tight-caption">Title</th>
-              <th scope="col" class="px-3 py-4 text-left text-[14px] font-semibold text-apple-ink-muted-80 tracking-tight-caption">Author</th>
-              <th scope="col" class="px-3 py-4 text-left text-[14px] font-semibold text-apple-ink-muted-80 tracking-tight-caption">Description</th>
-              <th scope="col" class="px-3 py-4 text-left text-[14px] font-semibold text-apple-ink-muted-80 tracking-tight-caption">Publish Date</th>
-              <th scope="col" class="relative py-4 pl-3 pr-6 text-right">
-                <span class="sr-only">Actions</span>
-              </th>
+              <th scope="col" class="py-4 pl-6 pr-3 text-left text-lg font-black text-neo-black uppercase tracking-wider border-r-neo border-neo-black">Title</th>
+              <th scope="col" class="px-4 py-4 text-left text-lg font-black text-neo-black uppercase tracking-wider border-r-neo border-neo-black">Author</th>
+              <th scope="col" class="px-4 py-4 text-left text-lg font-black text-neo-black uppercase tracking-wider border-r-neo border-neo-black">Description</th>
+              <th scope="col" class="px-4 py-4 text-left text-lg font-black text-neo-black uppercase tracking-wider border-r-neo border-neo-black">Publish Date</th>
+              <th scope="col" class="py-4 px-6 text-center text-lg font-black text-neo-black uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-apple-hairline bg-white">
-            <tr v-for="book in books" :key="book.id" class="hover:bg-apple-parchment transition-colors">
-              <td class="whitespace-nowrap py-4 pl-6 pr-3 text-[17px] font-semibold text-apple-ink tracking-tight-display truncate max-w-[200px]">{{ book.title }}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-[17px] text-apple-ink-muted-80">{{ book.author?.name || '-' }}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-[17px] text-apple-ink-muted-80 truncate max-w-xs">{{ book.description || '-' }}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-[17px] text-apple-ink-muted-80">{{ book.publish_date || '-' }}</td>
-              <td class="relative whitespace-nowrap py-4 pl-3 pr-6 text-right text-[17px]">
-                <button @click="openEditModal(book)" class="text-apple-primary hover:text-apple-primary-focus mr-4">Edit</button>
-                <button @click="deleteBook(book.id)" class="text-apple-primary hover:text-apple-primary-focus">Delete</button>
+          <tbody class="bg-white">
+            <tr v-for="book in books" :key="book.id" class="border-b-neo border-neo-black last:border-b-0 hover:bg-neo-bg transition-colors">
+              <td class="whitespace-nowrap py-4 pl-6 pr-3 text-lg font-bold text-neo-black border-r-neo border-neo-black truncate max-w-[200px]">{{ book.title }}</td>
+              <td class="whitespace-nowrap px-4 py-4 text-lg font-bold text-neo-black border-r-neo border-neo-black">{{ book.author?.name || '-' }}</td>
+              <td class="px-4 py-4 text-base font-bold text-neo-black border-r-neo border-neo-black truncate max-w-xs">{{ book.description || '-' }}</td>
+              <td class="whitespace-nowrap px-4 py-4 text-lg font-bold text-neo-black border-r-neo border-neo-black">{{ book.publish_date || '-' }}</td>
+              <td class="whitespace-nowrap py-4 px-4 flex justify-center space-x-3">
+                <button @click="openEditModal(book)" class="bg-neo-blue text-white font-black uppercase text-sm border-2 border-neo-black rounded-neo px-3 py-1 shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">Edit</button>
+                <button @click="deleteBook(book.id)" class="bg-neo-red text-white font-black uppercase text-sm border-2 border-neo-black rounded-neo px-3 py-1 shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">Delete</button>
               </td>
             </tr>
             <tr v-if="books.length === 0">
-              <td colspan="5" class="px-6 py-8 text-center text-[17px] text-apple-ink-muted-80">No books found.</td>
+              <td colspan="5" class="px-6 py-12 text-center text-xl font-black text-neo-black uppercase">NO BOOKS FOUND!</td>
             </tr>
           </tbody>
         </table>
@@ -68,40 +66,40 @@
     <!-- Modal Form -->
     <Modal :is-open="isModalOpen" :title="isEditing ? 'Edit Book' : 'Add Book'" @close="closeModal">
       <form @submit.prevent="submitForm">
-        <div class="space-y-4">
+        <div class="space-y-6">
           <div>
-            <label for="title" class="block text-[14px] font-semibold text-apple-ink tracking-tight-caption mb-1">Title</label>
-            <input type="text" id="title" v-model="form.title" required class="block w-full rounded-apple-sm border-apple-hairline bg-apple-parchment focus:bg-white focus:border-apple-primary focus:ring-1 focus:ring-apple-primary text-[17px] px-4 py-3 border outline-none transition-colors">
-            <p v-if="validationErrors.title" class="mt-1 text-[14px] text-red-600">{{ validationErrors.title[0] }}</p>
+            <label for="title" class="block text-lg font-black text-neo-black uppercase mb-2">Title</label>
+            <input type="text" id="title" v-model="form.title" required class="block w-full border-neo border-neo-black rounded-neo bg-white px-4 py-3 text-lg font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:translate-x-[2px] focus:translate-y-[2px] focus:shadow-none outline-none transition-all">
+            <p v-if="validationErrors.title" class="mt-2 text-base font-bold text-neo-red bg-neo-black px-2 py-1 inline-block">{{ validationErrors.title[0] }}</p>
           </div>
           <div>
-            <label for="author_id" class="block text-[14px] font-semibold text-apple-ink tracking-tight-caption mb-1">Author</label>
-            <select id="author_id" v-model="form.author_id" required class="block w-full rounded-apple-sm border-apple-hairline bg-apple-parchment focus:bg-white focus:border-apple-primary focus:ring-1 focus:ring-apple-primary text-[17px] px-4 py-3 border outline-none transition-colors appearance-none cursor-pointer">
-              <option value="" disabled>Select an author</option>
+            <label for="author_id" class="block text-lg font-black text-neo-black uppercase mb-2">Author</label>
+            <select id="author_id" v-model="form.author_id" required class="block w-full border-neo border-neo-black rounded-neo bg-white px-4 py-3 text-lg font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:translate-x-[2px] focus:translate-y-[2px] focus:shadow-none outline-none transition-all appearance-none cursor-pointer">
+              <option value="" disabled>Select an author...</option>
               <option v-for="author in allAuthors" :key="author.id" :value="author.id">
                 {{ author.name }}
               </option>
             </select>
-            <p v-if="validationErrors.author_id" class="mt-1 text-[14px] text-red-600">{{ validationErrors.author_id[0] }}</p>
+            <p v-if="validationErrors.author_id" class="mt-2 text-base font-bold text-neo-red bg-neo-black px-2 py-1 inline-block">{{ validationErrors.author_id[0] }}</p>
           </div>
           <div>
-            <label for="description" class="block text-[14px] font-semibold text-apple-ink tracking-tight-caption mb-1">Description</label>
-            <textarea id="description" v-model="form.description" rows="3" class="block w-full rounded-apple-sm border-apple-hairline bg-apple-parchment focus:bg-white focus:border-apple-primary focus:ring-1 focus:ring-apple-primary text-[17px] px-4 py-3 border outline-none transition-colors"></textarea>
-            <p v-if="validationErrors.description" class="mt-1 text-[14px] text-red-600">{{ validationErrors.description[0] }}</p>
+            <label for="description" class="block text-lg font-black text-neo-black uppercase mb-2">Description</label>
+            <textarea id="description" v-model="form.description" rows="3" class="block w-full border-neo border-neo-black rounded-neo bg-white px-4 py-3 text-lg font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:translate-x-[2px] focus:translate-y-[2px] focus:shadow-none outline-none transition-all"></textarea>
+            <p v-if="validationErrors.description" class="mt-2 text-base font-bold text-neo-red bg-neo-black px-2 py-1 inline-block">{{ validationErrors.description[0] }}</p>
           </div>
           <div>
-            <label for="publish_date" class="block text-[14px] font-semibold text-apple-ink tracking-tight-caption mb-1">Publish Date</label>
-            <input type="date" id="publish_date" v-model="form.publish_date" class="block w-full rounded-apple-sm border-apple-hairline bg-apple-parchment focus:bg-white focus:border-apple-primary focus:ring-1 focus:ring-apple-primary text-[17px] px-4 py-3 border outline-none transition-colors">
-            <p v-if="validationErrors.publish_date" class="mt-1 text-[14px] text-red-600">{{ validationErrors.publish_date[0] }}</p>
+            <label for="publish_date" class="block text-lg font-black text-neo-black uppercase mb-2">Publish Date</label>
+            <input type="date" id="publish_date" v-model="form.publish_date" class="block w-full border-neo border-neo-black rounded-neo bg-white px-4 py-3 text-lg font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:translate-x-[2px] focus:translate-y-[2px] focus:shadow-none outline-none transition-all">
+            <p v-if="validationErrors.publish_date" class="mt-2 text-base font-bold text-neo-red bg-neo-black px-2 py-1 inline-block">{{ validationErrors.publish_date[0] }}</p>
           </div>
         </div>
       </form>
       <template #footer>
-        <button type="button" @click="submitForm" :disabled="isSubmitting" class="w-full sm:w-auto inline-flex justify-center bg-apple-primary text-white text-[17px] font-body rounded-apple-pill px-[22px] py-[11px] hover:scale-95 transition-transform duration-200 disabled:opacity-50">
-          {{ isSubmitting ? 'Saving...' : 'Save' }}
+        <button type="button" @click="submitForm" :disabled="isSubmitting" class="w-full sm:w-auto inline-flex justify-center bg-neo-green text-neo-black font-black uppercase tracking-wider border-neo border-neo-black rounded-neo px-8 py-3 shadow-neo hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all disabled:opacity-50">
+          {{ isSubmitting ? 'SAVING...' : 'SAVE!' }}
         </button>
-        <button type="button" @click="closeModal" class="mt-3 sm:mt-0 w-full sm:w-auto inline-flex justify-center bg-apple-pearl text-apple-ink-muted-80 border border-apple-hairline text-[17px] font-body rounded-apple-pill px-[22px] py-[11px] hover:bg-apple-parchment transition-colors">
-          Cancel
+        <button type="button" @click="closeModal" class="mt-4 sm:mt-0 w-full sm:w-auto inline-flex justify-center bg-white text-neo-black font-black uppercase tracking-wider border-neo border-neo-black rounded-neo px-8 py-3 shadow-neo hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all">
+          CANCEL
         </button>
       </template>
     </Modal>
