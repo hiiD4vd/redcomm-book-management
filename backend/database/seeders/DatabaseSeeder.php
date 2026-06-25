@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Buat 10 penulis, masing-masing dengan 3-5 buku
+        \App\Models\Author::factory(10)->create()->each(function ($author) {
+            \App\Models\Book::factory(rand(3, 5))->create([
+                'author_id' => $author->id
+            ]);
+        });
     }
 }
