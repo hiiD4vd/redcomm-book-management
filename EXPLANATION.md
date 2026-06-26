@@ -1,26 +1,28 @@
 # EXPLANATION.md
 
-## Architectural Decisions & Trade-offs
+Dokumen ini berisi penjelasan singkat mengenai keputusan arsitektur dan desain yang saya ambil selama mengerjakan *project* ini.
+
+## Keputusan Arsitektur & Trade-offs
 
 ### 1. Separation of Concerns (Nuxt 4 + Laravel 11)
-Instead of building a monolith (e.g., Laravel Livewire or Inertia), I opted for a decoupled architecture using **Nuxt 4** as a standalone frontend and **Laravel 11** purely as a RESTful API backend. 
-- **Trade-off:** This requires running two separate servers during development and configuring CORS.
-- **Why I did it:** It demonstrates modern API design and allows both the frontend and backend to scale independently, fulfilling the prompt's requirement to show full-stack API capabilities.
+Daripada membangun aplikasi *monolith* (seperti menggunakan Laravel Livewire atau Inertia), saya memutuskan untuk memisahkan *frontend* (**Nuxt 4**) dan *backend* (**Laravel 11** murni sebagai REST API).
+- **Trade-off:** Membutuhkan dua server terpisah saat *development* dan harus mengatur CORS.
+- **Alasan:** Pendekatan ini menunjukkan pemahaman saya tentang desain API modern dan memungkinkan *frontend* serta *backend* untuk di-*scale* secara terpisah di masa depan. Ini sangat relevan dengan peran *Full-Stack Developer*.
 
 ### 2. Database & Eager Loading
-I used **SQLite** by default to make the local evaluation process as seamless as possible for the reviewer (no MySQL daemon required). However, the migrations and ORM usage are fully compatible with MySQL/PostgreSQL.
-To solve the **N+1 query problem**, I utilized Laravel's `with('author')` in the `BookController` and `withCount('books')` in the `AuthorController`.
+Saya menggunakan **SQLite** secara bawaan (*default*) agar proses penilaian/evaluasi lokal oleh *reviewer* menjadi sangat mudah (tidak perlu repot menyalakan MySQL daemon). Namun, struktur *migration* dan ORM-nya 100% kompatibel jika ingin dipindah ke MySQL/PostgreSQL.
+Untuk mengatasi masalah **N+1 query** (salah satu poin bonus), saya mengimplementasikan `with('author')` di `BookController` dan `withCount('books')` di `AuthorController`.
 
 ### 3. Caching Strategy
-To improve performance, I wrapped the `index()` methods of both `AuthorController` and `BookController` in `Cache::remember()`.
-- **Trade-off:** Caching introduces data staleness.
-- **Why I did it:** To counter the staleness, I implemented cache invalidation (`Cache::flush()`) inside every state-mutating method (`store`, `update`, `destroy`). This ensures users always see fresh data while maintaining read performance.
+Untuk meningkatkan performa (poin bonus lainnya), saya membungkus *method* `index()` pada `AuthorController` dan `BookController` menggunakan `Cache::remember()`.
+- **Trade-off:** Data hasil *cache* berpotensi basi (*stale*).
+- **Alasan & Solusi:** Untuk mengatasi masalah data basi, saya membuat sistem invalidasi otomatis (`Cache::flush()`) di dalam setiap *method* yang mengubah data (`store`, `update`, `destroy`). Dengan begitu, pengguna selalu melihat data terbaru tanpa mengorbankan kecepatan baca (*read performance*).
 
-## UI/UX Design (Neobrutalism)
-The UI was intentionally designed using the **Neobrutalism** aesthetic (bold colors, hard black shadows, thick borders).
-- **Why I did it:** The test requested a "clean interface." Rather than using a generic component library (like Bootstrap or standard Tailwind UI), I built a custom design system from scratch to show strong CSS/Tailwind proficiency and to make the submission stand out visually. 
-- **UX Features:** Included micro-animations (buttons depressing when clicked), custom skeletons for loading states (`Skeleton.vue`), and robust client-side routing.
+## Desain UI/UX (Neobrutalism)
+Antarmuka aplikasi ini sengaja didesain menggunakan gaya **Neobrutalism** (warna-warni mencolok, bayangan hitam tebal, garis batas tegas).
+- **Alasan:** Syarat tes meminta antarmuka yang "bersih/clean". Alih-alih menggunakan *library* desain generik yang biasa dipakai orang lain, saya membangun *design system* ini dari nol menggunakan Tailwind CSS. Ini bertujuan untuk menonjolkan kemampuan *styling* tingkat lanjut dan membuat karya ini tampil beda dan *memorable* secara visual.
+- **Fitur UX Tambahan:** Saya menyertakan animasi mikro (tombol bereaksi saat ditekan), *loading skeleton* buatan sendiri (`Skeleton.vue`), dan transisi warna yang mulus.
 
-## Extra Features Included
-1. **Automated Testing:** Added comprehensive PHPUnit Feature tests for the API and Vitest component tests for the UI.
-2. **Indonesian Localization:** Localized the Faker data in Seeders to use real Indonesian names and book descriptions to make testing feel more authentic.
+## Fitur Tambahan (Extra)
+1. **Automated Testing:** Saya menambahkan tes otomatis menggunakan **PHPUnit** (untuk Backend API) dan **Vitest** (untuk Frontend komponen). Ini memastikan tidak ada API atau UI yang rusak tanpa ketahuan.
+2. **Lokalisasi Bahasa Indonesia:** Data *dummy* di *Seeder* telah diatur menggunakan *Faker* format lokal (`id_ID`), sehingga nama penulis dan deskripsi buku terasa lebih relevan dan tidak dipenuhi teks Latin (Lorem Ipsum).

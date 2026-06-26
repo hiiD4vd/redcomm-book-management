@@ -1,41 +1,41 @@
 # RedComm Book & Author Management System
 
-A simple, robust, and beautifully designed full-stack application for managing books and authors, built specifically for the RedComm Full Stack Developer (Intern) technical assessment.
+Aplikasi full-stack yang simpel, kokoh, dan didesain secara unik untuk mengelola buku dan penulis. Proyek ini dibangun khusus untuk memenuhi persyaratan tes teknikal **Full Stack Developer (Intern)** di RedComm.
 
 ## 🚀 Tech Stack
 
-- **Backend:** Laravel 11, SQLite (easily swappable to MySQL/PostgreSQL), PHPUnit
+- **Backend:** Laravel 11, SQLite (bisa diganti ke MySQL/PostgreSQL dengan sangat mudah), PHPUnit
 - **Frontend:** Nuxt 4 (Vue 3), Tailwind CSS, Vitest
-- **Design System:** Neobrutalism
+- **Design System:** Custom Neobrutalism UI
 
-## 📦 Features
+## 📦 Fitur Utama
 
-- **Full CRUD Operations:** View, create, update, and delete for both Authors and Books.
-- **Server-Side Pagination:** Smooth data lists that scale well with large datasets.
-- **Optimized Queries:** Eager Loading implemented to prevent N+1 query problems.
-- **Caching:** Frequently accessed paginated data is cached for 60 minutes for blazing-fast load times.
-- **Automated Testing:** 100% passing API Feature Tests (PHPUnit) and Frontend Component Tests (Vitest).
-- **Stunning UI:** Custom-built Neobrutalism design system with interactive micro-animations and skeletons.
+- **Full CRUD Operations:** Fitur melihat, menambah, mengubah, dan menghapus untuk Author dan Book.
+- **Server-Side Pagination:** Daftar data diload menggunakan paginasi agar tetap ringan meski datanya ribuan.
+- **Optimized Queries (Bonus):** Menggunakan teknik *Eager Loading* di Laravel untuk mencegah masalah *N+1 query*.
+- **Caching (Bonus):** Data yang sering diakses disimpan di *Cache* selama 60 menit untuk performa ekstra cepat, dan *cache* otomatis dihapus saat ada perubahan data.
+- **Automated Testing:** Lulus 100% tes otomatis (PHPUnit untuk API dan Vitest untuk UI).
+- **Stunning UI (Bonus):** Antarmuka pengguna bergaya *Neobrutalism* yang interaktif, rapi, dan dilengkapi *loading skeleton*.
 
-## ⚙️ Local Setup Instructions
+## ⚙️ Cara Menjalankan di Lokal (Local Setup)
 
-Follow these steps to get the application running on your local machine.
+Ikuti langkah-langkah di bawah ini untuk menjalankan aplikasi di komputer Anda.
 
-### Prerequisites
+### Prasyarat
 - Node.js (v18+)
 - PHP (v8.2+)
 - Composer
 
-### 1. Backend Setup
-1. Navigate to the backend directory:
+### 1. Setup Backend
+1. Masuk ke folder backend:
    ```bash
    cd backend
    ```
-2. Install PHP dependencies:
+2. Install dependencies PHP:
    ```bash
    composer install
    ```
-3. Copy the environment file:
+3. Copy file environment:
    ```bash
    cp .env.example .env
    ```
@@ -43,31 +43,32 @@ Follow these steps to get the application running on your local machine.
    ```bash
    php artisan key:generate
    ```
-5. Run migrations and seed the database with Indonesian mock data:
+5. Jalankan migrasi dan isi database dengan data dummy (berbahasa Indonesia):
    ```bash
    php artisan migrate:fresh --seed
    ```
-6. Start the local server:
+6. Jalankan server lokal:
    ```bash
    php artisan serve
    ```
-   *The API will be available at `http://127.0.0.1:8000/api`*
+   *API akan berjalan di `http://127.0.0.1:8000/api`*
 
-### 2. Frontend Setup
-1. Open a new terminal and navigate to the frontend directory:
+### 2. Setup Frontend
+1. Buka terminal baru dan masuk ke folder frontend:
    ```bash
    cd frontend
    ```
-2. Install Node dependencies:
+2. Install dependencies Node:
    ```bash
    npm install
    ```
-3. Start the Nuxt development server:
+3. Jalankan server development Nuxt:
    ```bash
    npm run dev
    ```
-4. Open your browser and visit: `http://localhost:3000`
+4. Buka browser dan kunjungi: `http://localhost:3000`
 
-## 🧪 Running Tests
+## 🧪 Menjalankan Unit Testing
+Untuk memastikan seluruh sistem berjalan tanpa bug:
 - **Backend (PHPUnit):** `cd backend && php artisan test`
 - **Frontend (Vitest):** `cd frontend && npm run test`
