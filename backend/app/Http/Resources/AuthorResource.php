@@ -20,6 +20,7 @@ class AuthorResource extends JsonResource
             'bio' => $this->bio,
             'birth_date' => $this->birth_date,
             'books' => BookResource::collection($this->whenLoaded('books')),
+            'books_count' => $this->whenHas('books_count'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

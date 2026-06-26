@@ -41,7 +41,7 @@
               <td class="whitespace-nowrap py-4 pl-6 pr-3 text-lg font-bold text-neo-black border-r-neo border-neo-black">{{ author.name }}</td>
               <td class="px-4 py-4 text-base font-bold text-neo-black border-r-neo border-neo-black max-w-xs truncate">{{ author.bio || '-' }}</td>
               <td class="whitespace-nowrap px-4 py-4 text-lg font-bold text-neo-black border-r-neo border-neo-black">{{ author.birth_date || '-' }}</td>
-              <td class="whitespace-nowrap px-4 py-4 text-lg font-black text-neo-black border-r-neo border-neo-black text-center">{{ author.books?.length || 0 }}</td>
+              <td class="whitespace-nowrap px-4 py-4 text-lg font-black text-neo-black border-r-neo border-neo-black text-center">{{ author.books_count ?? author.books?.length ?? 0 }}</td>
               <td class="whitespace-nowrap py-4 px-4 flex justify-center space-x-3">
                 <button @click="openEditModal(author)" class="bg-neo-blue text-white font-black uppercase text-sm border-2 border-neo-black rounded-neo px-3 py-1 shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">Edit</button>
                 <button @click="deleteAuthor(author.id)" class="bg-neo-red text-white font-black uppercase text-sm border-2 border-neo-black rounded-neo px-3 py-1 shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">Delete</button>

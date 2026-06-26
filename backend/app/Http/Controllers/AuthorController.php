@@ -15,10 +15,12 @@ class AuthorController extends Controller
     public function index()
     {
         $page = request()->get('page', 1);
+        $perPage = request()->get('per_page', 10);
         
         // set cache sejam
-        $authors = Cache::remember("authors_page_{$page}", 3600, function () {
-            return Author::withCount('books')->latest()->paginate(10);
+        $authors = Cache::remember("authors_page_{$page}_per_{$perPage}", 3600, function () use ($perPage) {
+            $query = Author::withCount('books')->latest();
+            return $perPage === 'all' ? $query->get() : $query->paginate($perPage);
         });
         
         return AuthorResource::collection($authors);

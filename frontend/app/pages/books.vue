@@ -129,7 +129,7 @@ const handlePageChange = (page) => {
 const allAuthors = ref([])
 const fetchAllAuthors = async () => {
   try {
-    const res = await api('/authors?page=1')
+    const res = await api('/authors?per_page=all')
     allAuthors.value = res.data
   } catch (e) {
     console.error('Failed to fetch authors')

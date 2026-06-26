@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-between border-t-neo border-neo-black bg-white px-6 py-4 mt-8 rounded-b-neo">
+  <div class="flex items-center justify-between border-t-neo border-neo-black bg-white px-6 py-4 rounded-b-neo">
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
         <p class="text-base font-bold text-neo-black">

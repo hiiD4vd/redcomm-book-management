@@ -19,7 +19,7 @@ class AuthorApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonStructure([
                      'data' => [
-                         '*' => ['id', 'name', 'bio', 'birth_date', 'books']
+                         '*' => ['id', 'name', 'bio', 'birth_date', 'books_count']
                      ],
                      'meta',
                      'links'
