@@ -5,31 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Author Model.
- * Represents an author in the system.
- */
+// Model buat tabel Authors
 class Author extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    // Kolom yang boleh diisi pas create/update
     protected $fillable = [
         'name',
         'bio',
         'birth_date',
     ];
 
-    /**
-     * Get the books written by this author.
-     * Defines a one-to-many relationship.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+    // Relasi ke buku (1 author banyak buku)
     public function books()
     {
         return $this->hasMany(Book::class);

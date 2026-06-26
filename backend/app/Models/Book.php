@@ -5,19 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Book Model.
- * Represents a book in the system and its relationship to an Author.
- */
+// Model buat tabel Books
 class Book extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    // Kolom yang boleh diisi pas create/update
     protected $fillable = [
         'author_id',
         'title',
@@ -25,12 +18,7 @@ class Book extends Model
         'publish_date',
     ];
 
-    /**
-     * Get the author that wrote the book.
-     * Defines a one-to-many (inverse) relationship.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+    // Relasi ke tabel authors (1 buku punya 1 author)
     public function author()
     {
         return $this->belongsTo(Author::class);

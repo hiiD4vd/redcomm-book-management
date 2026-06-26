@@ -8,38 +8,24 @@ use App\Http\Requests\UpdateBookRequest;
 use App\Http\Resources\BookResource;
 use Illuminate\Support\Facades\Cache;
 
-/**
- * Controller for managing Books.
- * Handles CRUD operations and API responses for books.
- */
+// Handle CRUD untuk Book
 class BookController extends Controller
 {
-    /**
-     * Display a paginated listing of books.
-     * Uses eager loading to prevent N+1 query problems and caching for performance.
-     *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
+    // Get daftar buku, pake cache & eager load authornya
     public function index()
     {
         $page = request()->get('page', 1);
         
-        // Cache the paginated books for 60 minutes
+        // simpan cache buku sejam
         $books = Cache::remember("books_page_{$page}", 3600, function () {
-            // Eager load author to prevent N+1 query problem, paginate the results
+            // load relasi authornya sekalian biar ga N+1
             return Book::with('author')->latest()->paginate(10);
         });
         
         return BookResource::collection($books);
     }
 
-    /**
-     * Store a newly created book in the database.
-     * Clears the cache to ensure fresh data is loaded on the next request.
-     *
-     * @param  \App\Http\Requests\StoreBookRequest  $request
-     * @return \App\Http\Resources\BookResource
-     */
+    // Tambah buku baru
     public function store(StoreBookRequest $request)
     {
         $book = Book::create($request->validated());
@@ -47,26 +33,14 @@ class BookController extends Controller
         return new BookResource($book);
     }
 
-    /**
-     * Display the specified book with its associated author.
-     *
-     * @param  \App\Models\Book  $book
-     * @return \App\Http\Resources\BookResource
-     */
+    // Detail buku
     public function show(Book $book)
     {
         $book->load('author');
         return new BookResource($book);
     }
 
-    /**
-     * Update the specified book in the database.
-     * Clears the cache to reflect updated data.
-     *
-     * @param  \App\Http\Requests\UpdateBookRequest  $request
-     * @param  \App\Models\Book  $book
-     * @return \App\Http\Resources\BookResource
-     */
+    // Update data buku
     public function update(UpdateBookRequest $request, Book $book)
     {
         $book->update($request->validated());
@@ -74,13 +48,7 @@ class BookController extends Controller
         return new BookResource($book);
     }
 
-    /**
-     * Remove the specified book from the database.
-     * Clears the cache to remove the deleted book from lists.
-     *
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
+    // Hapus buku
     public function destroy(Book $book)
     {
         $book->delete();
